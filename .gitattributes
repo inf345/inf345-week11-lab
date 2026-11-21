@@ -1,0 +1,10 @@
+# Unix line endings for everything that runs on Linux. A file saved on Windows
+# with CRLF endings breaks shell scripts ("bash\r") and confuses YAML diffs.
+*.sh   text eol=lf
+*.py   text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.tf   text eol=lf
+*.hcl  text eol=lf
+*.ini  text eol=lf
+*.md   text eol=lf
