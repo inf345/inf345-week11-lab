@@ -20,6 +20,16 @@ resource "docker_container" "app" {
   restart = var.restart_policy
   env     = ["PORT=${var.internal_port}"]
 
+  # The same platform as the image. Without it, Docker on an Apple-silicon Mac may look
+  # for an arm64 copy that was never pulled ("content digest ... not found").
+  platform = "linux/amd64"
+
+  lifecycle {
+    # Docker reports the platform back as just "linux": without this, every plan
+    # would want to replace the container.
+    ignore_changes = [platform]
+  }
+
   ports {
     # BLANK 6 - the port the app listens on INSIDE the container (look at the env line)
     internal = ____

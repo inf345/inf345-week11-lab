@@ -455,6 +455,14 @@ lowercase. `manifest unknown`: that tag does not exist — copy the SHA from the
 `main.tf` tells Docker to pull that one and emulate it. You deleted that line.
 → Put it back.
 
+**`Error: Unable to create container: … NotFound: content digest sha256:…: not found`**
+(Apple-silicon Mac)
+→ Your image has an Intel and an Apple copy (the rescue image does). Terraform pulled only
+the `linux/amd64` one, then Docker looked for the Apple copy to create the container.
+→ The container needs `platform = "linux/amd64"` too. Copy the `platform` line and the
+`lifecycle` block under `env` from the starter's `main.tf` into yours, then `terraform apply`
+again.
+
 **`Error: Unable to create container: Error response from daemon: Conflict. The container
 name "/inf345-app" is already in use`**
 → An `inf345-app` container exists that Terraform did not create (an earlier `docker run`, or
